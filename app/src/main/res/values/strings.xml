@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">RandomDrinker</string>
+
+    <string name="label_min_value">Minimal value</string>
+    <string name="label_max_value">Maximal value</string>
+    <string name="label_choose_the_sound">Choose the sound</string>
+    <string name="label_instant_chance">Instant chance %</string>
+    <string name="button_lets_drink">Let`s DRINK !</string>
+    <string name="test_sound">test sound</string>
+    <string name="label_initial_sound">Initial sound</string>
+
+</resources>
