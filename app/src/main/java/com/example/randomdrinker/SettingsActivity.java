@@ -3,11 +3,13 @@ package com.example.randomdrinker;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.Random;
@@ -25,6 +27,8 @@ public class SettingsActivity extends AppCompatActivity {
     private int maxValue;
     private int instanceChance;
     private boolean isInitialSound;
+
+    private Spinner spinnerSounds;
 
 
 
@@ -44,6 +48,7 @@ public class SettingsActivity extends AppCompatActivity {
         this.editTextMax = findViewById(R.id.editTextMax);
         this.editTextInstance = findViewById(R.id.editTextInstance);
         this.checkBoxInitialSound = findViewById(R.id.checkBoxInitialSound);
+        this.spinnerSounds = findViewById(R.id.spinnerSounds);
     }
 
     private void initActions() {
@@ -76,6 +81,31 @@ public class SettingsActivity extends AppCompatActivity {
                     }
 
                 }
+
+            }
+        });
+
+        buttonTestSound.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                MediaPlayer mp;
+                String selectedSound = spinnerSounds.getSelectedItem().toString();
+                switch (selectedSound) {
+                    case "dwayne":
+                        mp = MediaPlayer.create(SettingsActivity.this, R.raw.sound_dwayne);
+                        break;
+                    case "rock":
+                        mp = MediaPlayer.create(SettingsActivity.this, R.raw.sound_rock);
+                        break;
+                    case "tube":
+                        mp = MediaPlayer.create(SettingsActivity.this, R.raw.sound_tube);
+                        break;
+                    default:
+                        mp = MediaPlayer.create(SettingsActivity.this, R.raw.sound_bell);
+                        break;
+                }
+                mp.start();
 
             }
         });

@@ -9,4 +9,11 @@
     <string name="test_sound">test sound</string>
     <string name="label_initial_sound">Initial sound</string>
 
+    <string-array name="soundNames">
+        <item>bell</item>
+        <item>rock</item>
+        <item>dwayne</item>
+        <item>tube</item>
+    </string-array>
+
 </resources>
