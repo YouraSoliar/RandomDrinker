@@ -25,7 +25,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private int minValue;
     private int maxValue;
-    private int instanceChance;
+    private double instanceChance;
     private boolean isInitialSound;
 
     private Spinner spinnerSounds;
@@ -65,16 +65,19 @@ public class SettingsActivity extends AppCompatActivity {
                 } else {
                     maxValue = Integer.parseInt(editTextMax.getText().toString());
                     minValue = Integer.parseInt(editTextMin.getText().toString());
-                    instanceChance = Integer.parseInt(editTextInstance.getText().toString());
+                    instanceChance = (Integer.parseInt(editTextInstance.getText().toString())) * 0.01;
                     isInitialSound = checkBoxInitialSound.isChecked();
+
+                    String soundName = spinnerSounds.getSelectedItem().toString();
 
                     if (maxValue > minValue) {
                         int random = new Random().nextInt((maxValue - minValue) + 1) + minValue;
                         Intent intent = new Intent(SettingsActivity.this, TimerActivity.class);
                         intent.putExtra("minValue", minValue);
                         intent.putExtra("maxValue", maxValue);
-                        intent.putExtra("InstanceChance", instanceChance);
+                        intent.putExtra("instanceChance", instanceChance);
                         intent.putExtra("isInitialSound", isInitialSound);
+                        intent.putExtra("soundName", soundName);
                         startActivity(intent);
                     } else {
                         Toast.makeText(SettingsActivity.this, "Incorrect min max values", Toast.LENGTH_SHORT).show();
@@ -100,6 +103,9 @@ public class SettingsActivity extends AppCompatActivity {
                         break;
                     case "tube":
                         mp = MediaPlayer.create(SettingsActivity.this, R.raw.sound_tube);
+                        break;
+                    case "fart":
+                        mp = MediaPlayer.create(SettingsActivity.this, R.raw.sound_fart);
                         break;
                     default:
                         mp = MediaPlayer.create(SettingsActivity.this, R.raw.sound_bell);

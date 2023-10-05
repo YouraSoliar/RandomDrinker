@@ -34,25 +34,29 @@
             android:layout_marginTop="150dp"/>
 
         <ImageButton
-            android:id="@+id/floatingPlay"
-            android:layout_width="80dp"
+            android:id="@+id/imagePlay"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_below="@+id/textViewTimer"
             android:layout_alignParentStart="true"
             android:layout_marginTop="30dp"
             android:layout_marginStart="80dp"
+            android:layout_marginEnd="80dp"
+            android:visibility="visible"
             android:background="@drawable/ripple_oval"
             android:src="@drawable/baseline_play_arrow_24" />
 
         <ImageButton
-            android:id="@+id/floatingReset"
-            android:layout_width="80dp"
+            android:id="@+id/imageReset"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_below="@+id/textViewTimer"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
             android:layout_marginTop="30dp"
-            android:background="@drawable/ripple_oval"
+            android:layout_marginStart="80dp"
             android:layout_marginEnd="80dp"
+            android:visibility="gone"
+            android:background="@drawable/ripple_oval"
             android:src="@drawable/baseline_restart_alt_24" />
 
     </RelativeLayout>
