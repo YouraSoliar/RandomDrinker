@@ -34,6 +34,7 @@ public class TimerActivity extends AppCompatActivity {
     private ImageButton imagePlay;
     private ImageButton imageReset;
     private Chronometer chronometer;
+    private TextView textViewLogs;
     private boolean isInitialSound = true;
     private int minValue;
     private int maxValue;
@@ -56,6 +57,7 @@ public class TimerActivity extends AppCompatActivity {
         this.imagePlay = findViewById(R.id.imagePlay);
         this.imageReset = findViewById(R.id.imageReset);
         this.chronometer = findViewById(R.id.chronometer);
+        this.textViewLogs = findViewById(R.id.textViewLogs);
         this.relativeLayoutTimer = findViewById(R.id.relativeLayoutTimer);
 
         Intent intent = getIntent();
@@ -99,6 +101,8 @@ public class TimerActivity extends AppCompatActivity {
                     new Handler(Looper.getMainLooper()).post(new Runnable () {
                         @Override
                         public void run () {
+                            textViewLogs.append(chronometer.getText());
+                            textViewLogs.append(System.getProperty("line.separator"));
                             chronometer.setBase(SystemClock.elapsedRealtime());
                             makeSplash();
                             playSound();
