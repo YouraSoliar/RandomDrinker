@@ -8,10 +8,16 @@ import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -27,13 +33,13 @@ public class TimerActivity extends AppCompatActivity {
     private RelativeLayout relativeLayoutTimer;
     private ImageButton imagePlay;
     private ImageButton imageReset;
-    private TextView textViewTimer;
-
+    private Chronometer chronometer;
     private boolean isInitialSound = true;
     private int minValue;
     private int maxValue;
     private double instanceChance;
     private String soundName;
+    private String randomTime;
 
 
     @Override
@@ -49,7 +55,7 @@ public class TimerActivity extends AppCompatActivity {
         this.floatingBack = findViewById(R.id.floatingBack);
         this.imagePlay = findViewById(R.id.imagePlay);
         this.imageReset = findViewById(R.id.imageReset);
-        this.textViewTimer = findViewById(R.id.textViewTimer);
+        this.chronometer = findViewById(R.id.chronometer);
         this.relativeLayoutTimer = findViewById(R.id.relativeLayoutTimer);
 
         Intent intent = getIntent();
@@ -61,7 +67,6 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void initActions() {
-        getRandomSecondsValue();
         floatingBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,24 +80,46 @@ public class TimerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 imageReset.setVisibility(View.VISIBLE);
                 imagePlay.setVisibility(View.GONE);
-                makeSplash();
+
                 if (isInitialSound) {
                     playSound();
                 }
+
+                chronometer.setBase(SystemClock.elapsedRealtime());
+                chronometer.start();
+                getRandomTimeValue();
             }
         });
+
+        chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+            @Override
+            public void onChronometerTick(Chronometer chronometer) {
+                if (chronometer.getText().toString().equals(randomTime)) {
+
+                    new Handler(Looper.getMainLooper()).post(new Runnable () {
+                        @Override
+                        public void run () {
+                            chronometer.setBase(SystemClock.elapsedRealtime());
+                            makeSplash();
+                            playSound();
+                            getRandomTimeValue();
+                        }
+                    });
+                }
+            }
+        });
+
 
         imageReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 imageReset.setVisibility(View.GONE);
                 imagePlay.setVisibility(View.VISIBLE);
+
+                chronometer.setBase(SystemClock.elapsedRealtime());
+                chronometer.stop();
             }
         });
-    }
-
-    public void startTimer(boolean isAfterDrink) {
-
     }
 
     public void makeSplash() {
@@ -150,18 +177,34 @@ public class TimerActivity extends AppCompatActivity {
         mp.start();
     }
 
-    public int getRandomSecondsValue() {
+    public void getRandomTimeValue() {
         Random random = new Random();
-        int randomSeconds = 5;
+        randomTime = "00:05";
 
         double randomValue = random.nextDouble();
         if (randomValue > instanceChance) {
             int randomMinutesValue = (int)Math.floor(Math.random() * (maxValue - minValue + 1) + minValue);
 
-            randomSeconds = (random.nextInt(60) + 1) + (randomMinutesValue * 60);
+            int randomSecondsValue;
+            if (randomMinutesValue == maxValue) {
+                randomSecondsValue = 0;
+            } else {
+                randomSecondsValue= (random.nextInt(60) + 1);
+            }
+            randomTime = "";
+            if (randomMinutesValue < 10) {
+                randomTime = "0";
+            }
+            randomTime += randomMinutesValue + ":";
+
+            if (randomSecondsValue < 10) {
+                randomTime += "0";
+            }
+            randomTime += randomSecondsValue + "";
         }
 
-        return randomSeconds;
+        Toast.makeText(TimerActivity.this, randomTime, Toast.LENGTH_SHORT).show();
+
     }
 
 }
