@@ -2,8 +2,6 @@ package com.example.randomdrinker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraAccessException;
@@ -13,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
@@ -23,7 +20,12 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -43,7 +45,11 @@ public class TimerActivity extends AppCompatActivity {
     private int maxValue;
     private double instanceChance;
     private String soundName;
-    private String randomTime;
+    private String randomFormattedTime;
+    private long randomMillsTime;
+
+    private Timer mTimer;
+    private MyTimerTask mMyTimerTask;
 
 
     @Override
@@ -90,30 +96,16 @@ public class TimerActivity extends AppCompatActivity {
                 if (isInitialSound) {
                     playSound();
                 }
-
+                getRandomTimeValue();
                 chronometer.setBase(SystemClock.elapsedRealtime());
                 chronometer.start();
-                getRandomTimeValue();
-            }
-        });
 
-        chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
-            @Override
-            public void onChronometerTick(Chronometer chronometer) {
-                if (chronometer.getText().toString().equals(randomTime)) {
-
-                    new Handler(Looper.getMainLooper()).post(new Runnable () {
-                        @Override
-                        public void run () {
-                            textViewLogs.append(chronometer.getText());
-                            textViewLogs.append(System.getProperty("line.separator"));
-                            chronometer.setBase(SystemClock.elapsedRealtime());
-                            makeSplash();
-                            playSound();
-                            getRandomTimeValue();
-                        }
-                    });
+                if (mTimer != null) {
+                    mTimer.cancel();
                 }
+                mTimer = new Timer();
+                mMyTimerTask = new MyTimerTask();
+                mTimer.schedule(mMyTimerTask, randomMillsTime);
             }
         });
 
@@ -126,6 +118,11 @@ public class TimerActivity extends AppCompatActivity {
 
                 chronometer.setBase(SystemClock.elapsedRealtime());
                 chronometer.stop();
+
+                if (mTimer != null) {
+                    mTimer.cancel();
+                    mTimer = null;
+                }
             }
         });
     }
@@ -162,7 +159,6 @@ public class TimerActivity extends AppCompatActivity {
         }, 3, TimeUnit.SECONDS);
 
     }
-
     public void playSound() {
         MediaPlayer mp;
         switch (soundName) {
@@ -184,10 +180,10 @@ public class TimerActivity extends AppCompatActivity {
         }
         mp.start();
     }
-
     public void getRandomTimeValue() {
         Random random = new Random();
-        randomTime = "00:05";
+        randomFormattedTime = "00:05";
+        randomMillsTime = 5000;
 
         double randomValue = random.nextDouble();
         if (randomValue > instanceChance) {
@@ -199,21 +195,47 @@ public class TimerActivity extends AppCompatActivity {
             } else {
                 randomSecondsValue= (random.nextInt(60) + 1);
             }
-            randomTime = "";
+            randomFormattedTime = "";
             if (randomMinutesValue < 10) {
-                randomTime = "0";
+                randomFormattedTime = "0";
             }
-            randomTime += randomMinutesValue + ":";
+            randomFormattedTime += randomMinutesValue + ":";
 
             if (randomSecondsValue < 10) {
-                randomTime += "0";
+                randomFormattedTime += "0";
             }
-            randomTime += randomSecondsValue + "";
+            randomFormattedTime += randomSecondsValue + "";
+
+            randomMillsTime = (randomMinutesValue * 60000L) + (randomSecondsValue * 1000);
         }
 
         if (isHint) {
-            Toast.makeText(TimerActivity.this, randomTime, Toast.LENGTH_SHORT).show();
+            Toast.makeText(TimerActivity.this, randomFormattedTime, Toast.LENGTH_SHORT).show();
         }
     }
 
+
+    class MyTimerTask extends TimerTask {
+        @Override
+        public void run() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    makeSplash();
+                    playSound();
+                    textViewLogs.append(chronometer.getText());
+                    textViewLogs.append(System.getProperty("line.separator"));
+                    chronometer.setBase(SystemClock.elapsedRealtime());
+                    getRandomTimeValue();
+
+                    if (mTimer != null) {
+                        mTimer.cancel();
+                    }
+                    mTimer = new Timer();
+                    mMyTimerTask = new MyTimerTask();
+                    mTimer.schedule(mMyTimerTask, randomMillsTime);
+                }
+            });
+        }
+    }
 }
