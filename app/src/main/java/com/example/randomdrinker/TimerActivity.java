@@ -2,6 +2,8 @@ package com.example.randomdrinker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraAccessException;
@@ -36,6 +38,7 @@ public class TimerActivity extends AppCompatActivity {
     private Chronometer chronometer;
     private TextView textViewLogs;
     private boolean isInitialSound = true;
+    private boolean isHint = false;
     private int minValue;
     private int maxValue;
     private double instanceChance;
@@ -65,6 +68,7 @@ public class TimerActivity extends AppCompatActivity {
         maxValue = intent.getIntExtra("maxValue", 2);
         instanceChance = intent.getDoubleExtra("instanceChance", 0.01);
         isInitialSound = intent.getBooleanExtra("isInitialSound", true);
+        isHint = intent.getBooleanExtra("isHint", false);
         soundName = intent.getStringExtra("soundName");
     }
 
@@ -207,8 +211,9 @@ public class TimerActivity extends AppCompatActivity {
             randomTime += randomSecondsValue + "";
         }
 
-        Toast.makeText(TimerActivity.this, randomTime, Toast.LENGTH_SHORT).show();
-
+        if (isHint) {
+            Toast.makeText(TimerActivity.this, randomTime, Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

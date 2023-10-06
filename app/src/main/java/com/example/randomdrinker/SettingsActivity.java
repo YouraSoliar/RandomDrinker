@@ -22,11 +22,13 @@ public class SettingsActivity extends AppCompatActivity {
     private EditText editTextMax;
     private EditText editTextInstance;
     private CheckBox checkBoxInitialSound;
+    private CheckBox checkBoxInitialHint;
 
     private int minValue;
     private int maxValue;
     private double instanceChance;
     private boolean isInitialSound;
+    private boolean isHint;
 
     private Spinner spinnerSounds;
 
@@ -48,6 +50,7 @@ public class SettingsActivity extends AppCompatActivity {
         this.editTextMax = findViewById(R.id.editTextMax);
         this.editTextInstance = findViewById(R.id.editTextInstance);
         this.checkBoxInitialSound = findViewById(R.id.checkBoxInitialSound);
+        this.checkBoxInitialHint = findViewById(R.id.checkBoxInitialHint);
         this.spinnerSounds = findViewById(R.id.spinnerSounds);
     }
 
@@ -67,6 +70,7 @@ public class SettingsActivity extends AppCompatActivity {
                     minValue = Integer.parseInt(editTextMin.getText().toString());
                     instanceChance = (Integer.parseInt(editTextInstance.getText().toString())) * 0.01;
                     isInitialSound = checkBoxInitialSound.isChecked();
+                    isHint = checkBoxInitialHint.isChecked();
 
                     String soundName = spinnerSounds.getSelectedItem().toString();
 
@@ -77,6 +81,7 @@ public class SettingsActivity extends AppCompatActivity {
                         intent.putExtra("maxValue", maxValue);
                         intent.putExtra("instanceChance", instanceChance);
                         intent.putExtra("isInitialSound", isInitialSound);
+                        intent.putExtra("isHint", isHint);
                         intent.putExtra("soundName", soundName);
                         startActivity(intent);
                     } else {

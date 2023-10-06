@@ -8,6 +8,7 @@
     <string name="button_lets_drink">Let`s DRINK !</string>
     <string name="test_sound">test sound</string>
     <string name="label_initial_sound">Initial sound</string>
+    <string name="label_hint">Show drink time</string>
 
     <string-array name="soundNames">
         <item>bell</item>
