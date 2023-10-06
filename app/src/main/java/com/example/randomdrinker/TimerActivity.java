@@ -2,6 +2,7 @@ package com.example.randomdrinker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraAccessException;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
@@ -41,6 +43,10 @@ public class TimerActivity extends AppCompatActivity {
     private TextView textViewLogs;
     private boolean isInitialSound = true;
     private boolean isHint = false;
+    private boolean isSplash = true;
+    private boolean isBackground = false;
+    private boolean isVibration = false;
+
     private int minValue;
     private int maxValue;
     private double instanceChance;
@@ -75,6 +81,9 @@ public class TimerActivity extends AppCompatActivity {
         instanceChance = intent.getDoubleExtra("instanceChance", 0.01);
         isInitialSound = intent.getBooleanExtra("isInitialSound", true);
         isHint = intent.getBooleanExtra("isHint", false);
+        isSplash = intent.getBooleanExtra("isSplash", true);
+        isVibration = intent.getBooleanExtra("isVibration", false);
+        isBackground = intent.getBooleanExtra("isBackground", false);
         soundName = intent.getStringExtra("soundName");
     }
 
@@ -82,6 +91,10 @@ public class TimerActivity extends AppCompatActivity {
         floatingBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (mTimer != null) {
+                    mTimer.cancel();
+                    mTimer = null;
+                }
                 Intent intent = new Intent(TimerActivity.this, SettingsActivity.class);
                 startActivity(intent);
             }
@@ -128,6 +141,9 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     public void makeSplash() {
+        if (!isSplash) {
+            return;
+        }
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         AtomicBoolean isFlash = new AtomicBoolean(true);
         // Schedule the task to run every 200 milliseconds (5 times per second) with an initial delay of 0 milliseconds,
@@ -213,7 +229,16 @@ public class TimerActivity extends AppCompatActivity {
             Toast.makeText(TimerActivity.this, randomFormattedTime, Toast.LENGTH_SHORT).show();
         }
     }
+    public void makeVibration() {
+        if (!isVibration) {
+            return;
+        }
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
+        if (vibrator.hasVibrator()) {
+            vibrator.vibrate(2000);
+        }
+    }
 
     class MyTimerTask extends TimerTask {
         @Override
@@ -223,6 +248,7 @@ public class TimerActivity extends AppCompatActivity {
                 public void run() {
                     makeSplash();
                     playSound();
+                    makeVibration();
                     textViewLogs.append(chronometer.getText());
                     textViewLogs.append(System.getProperty("line.separator"));
                     chronometer.setBase(SystemClock.elapsedRealtime());
@@ -236,6 +262,18 @@ public class TimerActivity extends AppCompatActivity {
                     mTimer.schedule(mMyTimerTask, randomMillsTime);
                 }
             });
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (!isBackground) {
+            if (mTimer != null) {
+                mTimer.cancel();
+                mTimer = null;
+            }
         }
     }
 }

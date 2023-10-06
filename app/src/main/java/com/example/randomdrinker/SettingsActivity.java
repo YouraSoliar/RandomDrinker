@@ -22,13 +22,14 @@ public class SettingsActivity extends AppCompatActivity {
     private EditText editTextMax;
     private EditText editTextInstance;
     private CheckBox checkBoxInitialSound;
-    private CheckBox checkBoxInitialHint;
+    private CheckBox checkBoxHint;
+    private CheckBox checkBoxVibration;
+    private CheckBox checkBoxSplash;
+    private CheckBox checkBoxBackground;
 
     private int minValue;
     private int maxValue;
     private double instanceChance;
-    private boolean isInitialSound;
-    private boolean isHint;
 
     private Spinner spinnerSounds;
 
@@ -50,7 +51,10 @@ public class SettingsActivity extends AppCompatActivity {
         this.editTextMax = findViewById(R.id.editTextMax);
         this.editTextInstance = findViewById(R.id.editTextInstance);
         this.checkBoxInitialSound = findViewById(R.id.checkBoxInitialSound);
-        this.checkBoxInitialHint = findViewById(R.id.checkBoxInitialHint);
+        this.checkBoxHint = findViewById(R.id.checkBoxHint);
+        this.checkBoxVibration = findViewById(R.id.checkBoxVibration);
+        this.checkBoxSplash = findViewById(R.id.checkBoxSplash);
+        this.checkBoxBackground = findViewById(R.id.checkBoxBackground);
         this.spinnerSounds = findViewById(R.id.spinnerSounds);
     }
 
@@ -69,8 +73,6 @@ public class SettingsActivity extends AppCompatActivity {
                     maxValue = Integer.parseInt(editTextMax.getText().toString());
                     minValue = Integer.parseInt(editTextMin.getText().toString());
                     instanceChance = (Integer.parseInt(editTextInstance.getText().toString())) * 0.01;
-                    isInitialSound = checkBoxInitialSound.isChecked();
-                    isHint = checkBoxInitialHint.isChecked();
 
                     String soundName = spinnerSounds.getSelectedItem().toString();
 
@@ -80,8 +82,11 @@ public class SettingsActivity extends AppCompatActivity {
                         intent.putExtra("minValue", minValue);
                         intent.putExtra("maxValue", maxValue);
                         intent.putExtra("instanceChance", instanceChance);
-                        intent.putExtra("isInitialSound", isInitialSound);
-                        intent.putExtra("isHint", isHint);
+                        intent.putExtra("isInitialSound", checkBoxInitialSound.isChecked());
+                        intent.putExtra("isHint", checkBoxHint.isChecked());
+                        intent.putExtra("isSplash", checkBoxSplash.isChecked());
+                        intent.putExtra("isVibration", checkBoxVibration.isChecked());
+                        intent.putExtra("isBackground", checkBoxBackground.isChecked());
                         intent.putExtra("soundName", soundName);
                         startActivity(intent);
                     } else {

@@ -18,33 +18,33 @@
         android:id="@+id/relativeLayoutMin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:orientation="vertical"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintBottom_toBottomOf="@+id/relativeLayoutHint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/relativeLayoutInitial">
 
         <EditText
             android:id="@+id/editTextMin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:inputType="number"
             android:layout_marginBottom="10dp"
             android:background="@drawable/boarder"
+            android:inputType="number"
             android:padding="20dp"
             android:paddingLeft="5dp"
-            android:textColor="@color/white"
             android:text="10"
+            android:textColor="@color/white"
             android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="3dp"
             android:background="@color/dark_purple"
             android:text="@string/label_min_value"
             android:textColor="@color/white" />
@@ -54,13 +54,13 @@
         android:id="@+id/relativeLayoutMax"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/relativeLayoutVibration"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@+id/relativeLayoutHint">
 
         <EditText
             android:id="@+id/editTextMax"
@@ -69,18 +69,18 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/boarder"
-            android:padding="20dp"
             android:inputType="number"
-            android:textColor="@color/white"
+            android:padding="20dp"
             android:paddingLeft="5dp"
             android:text="17"
+            android:textColor="@color/white"
             android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="3dp"
             android:background="@color/dark_purple"
             android:text="@string/label_max_value"
             android:textColor="@color/white" />
@@ -91,12 +91,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:orientation="vertical"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayoutMin">
+        app:layout_constraintBottom_toBottomOf="@+id/relativeLayoutSplash"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/relativeLayoutVibration">
 
         <EditText
             android:id="@+id/editTextInstance"
@@ -105,8 +105,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/boarder"
-            android:padding="20dp"
             android:inputType="number"
+            android:padding="20dp"
             android:paddingLeft="5dp"
             android:text="1"
             android:textColor="@color/white"
@@ -115,8 +115,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="3dp"
             android:background="@color/dark_purple"
             android:text="@string/label_instant_chance"
             android:textColor="@color/white" />
@@ -126,13 +126,13 @@
         android:id="@+id/relativeLayoutSound"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/relativeLayoutBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayoutMax">
+        app:layout_constraintTop_toTopOf="@+id/relativeLayoutSplash">
 
         <Spinner
             android:id="@+id/spinnerSounds"
@@ -141,17 +141,17 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/boarder"
-            android:padding="24dp"
             android:entries="@array/soundNames"
+            android:padding="24dp"
             android:paddingLeft="5dp"
             android:spinnerMode="dropdown" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/dark_purple"
-            android:layout_marginTop="3dp"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="3dp"
+            android:background="@color/dark_purple"
             android:text="@string/label_choose_the_sound"
             android:textColor="@color/white" />
 
@@ -174,20 +174,19 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="10dp"
         android:orientation="vertical"
         android:background="@drawable/boarder"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayoutInstance">
+        app:layout_constraintTop_toTopOf="parent">
 
         <CheckBox
             android:id="@+id/checkBoxInitialSound"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:paddingLeft="5dp"
@@ -203,7 +202,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="10dp"
         android:orientation="vertical"
         android:background="@drawable/boarder"
@@ -212,16 +211,97 @@
         app:layout_constraintTop_toBottomOf="@+id/relativeLayoutInitial">
 
         <CheckBox
-            android:id="@+id/checkBoxInitialHint"
+            android:id="@+id/checkBoxHint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:text="@string/label_hint"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutVibration"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/boarder"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayoutHint">
+
+        <CheckBox
+            android:id="@+id/checkBoxVibration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/label_vibration"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutSplash"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/boarder"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayoutVibration">
+
+        <CheckBox
+            android:id="@+id/checkBoxSplash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="5dp"
+            android:checked="true"
+            android:paddingRight="5dp"
+            android:text="@string/label_splash"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutBackground"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/boarder"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayoutSplash">
+
+        <CheckBox
+            android:id="@+id/checkBoxBackground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/label_background"
             android:textColor="@color/white" />
 
     </RelativeLayout>

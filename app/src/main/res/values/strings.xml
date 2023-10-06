@@ -9,6 +9,9 @@
     <string name="test_sound">test sound</string>
     <string name="label_initial_sound">Initial sound</string>
     <string name="label_hint">Show drink time</string>
+    <string name="label_vibration">Vibration</string>
+    <string name="label_splash">Splash</string>
+    <string name="label_background">Run in background</string>
 
     <string-array name="soundNames">
         <item>bell</item>
